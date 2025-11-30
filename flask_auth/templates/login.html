@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Meu sistema de login:</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">{{ messages[0] }}</div>
+      {% endif %}
+    {% endwith %}
+
+    <form action="/login" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <input type="email" name="email" placeholder="E-mail" required autofocus>
+        <input type="password" name="password" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+
+    <p style="margin-top:12px;">
+        <a href="/forgot">Esqueci a senha</a> ·
+        <a href="/register">Criar conta</a>
+    </p>
+
+</div>
+
+</body>
+</html>

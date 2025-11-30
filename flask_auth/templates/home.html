@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Bem-vindo, {{ user }}!</h2>
+
+    <p>Login realizado com sucesso.</p>
+
+    <form action="/logout" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <button type="submit">Sair</button>
+    </form>
+
+</div>
+
+</body>
+</html>

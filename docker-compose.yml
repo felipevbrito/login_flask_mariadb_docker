@@ -1,0 +1,46 @@
+services:
+  web:
+    build: .
+    container_name: flask_auth_web
+    ports:
+      - "8080:5000"
+    volumes:
+      - ./flask_auth:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=development
+      - DATABASE_URL=mysql+pymysql://flaskuser:flaskpass@db:3306/flaskdb
+    depends_on:
+      - db
+    command: flask run --host=0.0.0.0 --port=5000 --reload
+    restart: unless-stopped
+
+  db:
+    image: mariadb:11
+    container_name: flask_auth_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: flaskdb
+      MYSQL_USER: flaskuser
+      MYSQL_PASSWORD: flaskpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: flask_auth_pma
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpass
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    restart: unless-stopped
+
+volumes:
+  mariadb_data:
