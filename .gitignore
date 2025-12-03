@@ -1,0 +1,24 @@
+# Arquivos de log
+*.log
+flask_auth/activity.log
+
+# Ambiente virtual Python
+venv/
+.env/
+
+# Arquivos do Flask
+flask_auth/__pycache__/
+__pycache__/
+*.pyc
+
+# Configurações sensíveis
+*.env
+
+# Diretórios temporários
+tmp/
+temp/
+*.tmp
+
+# Docker
+*.pid
+
