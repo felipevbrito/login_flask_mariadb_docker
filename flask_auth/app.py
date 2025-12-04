@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, SECRET_KEY
 from datetime import datetime, timedelta
 import uuid
-from flask import session, request
 
 from util import log_event, generate_csrf_token, csrf_protect, limit_login_attempts
 
@@ -28,15 +27,15 @@ app.jinja_env.globals["csrf_token"] = generate_csrf_token
 
 # Página inicial
 @app.route("/")
-def home():
+def index():
     if "user" not in session:
         return redirect(url_for("login"))
-    return render_template("home.html", user=session["user"])
+    return render_template("pages/index.html", user=session["user"])
 
 
 @app.route("/home")
 def home_redirect():
-    return redirect(url_for("home"))
+    return redirect(url_for("index"))
 
 # Cadastro
 @app.route("/register", methods=["GET", "POST"])
@@ -68,8 +67,9 @@ def login():
 
         user = User.query.filter_by(email=email, status='active').first()
         if user and check_password_hash(user.password, password):
+            session["user_id"] = user.id
             session["user"] = user.username
-            return redirect(url_for("home"))
+            return redirect(url_for("index"))
         else:
             flash("Login inválido!", "danger")
 
@@ -104,7 +104,7 @@ def reset(token):
         flash("Token inválido!", "danger")
         return redirect(url_for("login"))
 
-    if user.token_expires < datetime.utcnow():
+    if not user.token_expires or user.token_expires < datetime.utcnow():
         flash("Token expirado!", "danger")
         return redirect(url_for("forgot"))
 
@@ -125,8 +125,6 @@ def logout():
     session.pop("user", None)
     return redirect(url_for("login"))
 
-
 if __name__ == "__main__":
-    #app.run(debug=True)
-    app.run(host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0")
 

@@ -1,8 +1,7 @@
 import logging
 import secrets
-from flask import session, request, abort
+from flask import session, request, abort, flash, redirect, url_for
 from datetime import datetime, timedelta
-from flask import session, flash, redirect, url_for
 
 #configuração de logs
 logging.basicConfig(
@@ -29,10 +28,15 @@ def generate_csrf_token():
     return session["_csrf_token"]
 
 #limite de tentativas
-MAX_ATTEMPTS = 5
+MAX_ATTEMPTS = 25
 LOCKOUT_TIME = timedelta(minutes=15)
 
 def limit_login_attempts():
+    # Ignorar GET (obrigatório)
+    if request.method == "GET":
+        return None
+
+def limit_login_attempts2():
     if request.endpoint == 'login' and request.method == 'POST':
         attempts = session.get("login_attempts", 0)
         last_attempt = session.get("last_attempt")
