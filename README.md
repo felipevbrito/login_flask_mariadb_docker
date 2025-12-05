@@ -10,6 +10,8 @@ program_login/
 │   ├── requirements.txt
 │   │
 │   ├── templates/
+│   │   ├── pages/
+│   │   │   └── index.html
 │   │   ├── login.html
 │   │   ├── register.html
 │   │   ├── forgot.html
