@@ -1,11 +1,11 @@
-from models import db, User
+from program_login.flask_auth.models2 import db, User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from config import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, SECRET_KEY
+from program_login.flask_auth.config2 import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, SECRET_KEY
 from datetime import datetime, timedelta
 import uuid
 
-from util import log_event, generate_csrf_token, csrf_protect, limit_login_attempts
+from program_login.flask_auth.util import log_event, generate_csrf_token, csrf_protect, limit_login_attempts
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI

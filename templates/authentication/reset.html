@@ -1,0 +1,31 @@
+{% extends "layouts/base-auth.html" %}
+
+{% block title %}Redefinir Senha{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <h2>Redefinir Senha</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('auth.reset', token=token) }}" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <input type="password" name="password" placeholder="Nova Senha" required>
+        <input type="password" name="confirm" placeholder="Confirmar Senha" required>
+
+        <button type="submit">Alterar</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('auth.login') }}">Voltar ao Login</a>
+    </p>
+
+</div>
+
+{% endblock %}

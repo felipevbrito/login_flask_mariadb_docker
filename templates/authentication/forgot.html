@@ -1,0 +1,29 @@
+{% extends "layouts/base-auth.html" %}
+
+{% block title %}Recuperar Senha{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <h2>Recuperar Senha</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('auth.forgot') }}" method="POST">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <input type="email" name="email" placeholder="Digite seu e-mail" required>
+        <button type="submit">Enviar Link</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('auth.login') }}">Voltar ao login</a>
+    </p>
+
+</div>
+
+{% endblock %}

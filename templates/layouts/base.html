@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    
+    <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    {% include "includes/head.html" %}
+</head>
+
+<body>
+    {% include "includes/sidebar.html" %}
+    <div class="main-content">
+        {% include "includes/navigation.html" %}
+        <section class="content-area">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+
+    {% include "includes/footer.html" %}
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>

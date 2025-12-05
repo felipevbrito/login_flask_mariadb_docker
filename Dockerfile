@@ -8,7 +8,7 @@ WORKDIR /app
 # ------------------------------------
 # Copiar requerimentos e instalar
 # ------------------------------------
-COPY flask_auth/requirements.txt .
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt

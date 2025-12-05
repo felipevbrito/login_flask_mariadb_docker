@@ -7,7 +7,7 @@ venv/
 .env/
 
 # Arquivos do Flask
-flask_auth/__pycache__/
+.flask_auth/
 __pycache__/
 *.pyc
 
