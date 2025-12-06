@@ -7,3 +7,4 @@ class Config:
     SECRET_KEY = 'sua_chave_secreta'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     WTF_CSRF_TIME_LIMIT = None
+    WTF_CSRF_ENABLED = True

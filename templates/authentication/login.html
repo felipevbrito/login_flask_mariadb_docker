@@ -14,13 +14,13 @@
         {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('auth.login') }}" method="POST">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+    <form method="POST">
+        {{ form.hidden_tag() }}
 
-        <input type="email" name="email" placeholder="E-mail" required autofocus>
-        <input type="password" name="password" placeholder="Senha" required>
+        {{ form.email }}
+        {{ form.password }}
 
-        <button type="submit">Entrar</button>
+        {{ form.submit(class="btn") }}
     </form>
 
     <p style="margin-top:12px;">

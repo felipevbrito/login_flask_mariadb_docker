@@ -5,18 +5,17 @@
     <title>{% block title %}{% endblock %}</title>
 
     <link rel="icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 
     {% include "includes/head.html" %}
 </head>
-<body>
+<body style="display:flex; flex-direction:column; min-height:100vh; margin:0;">
 
-<main>
-    {% block content %}{% endblock %}
-</main>
+    <main style="flex:1;">
+        {% block content %}{% endblock %}
+    </main>
 
-{% include "includes/footer.html" %}
+    {% include "includes/footer.html" %}
 
 </body>
 </html>

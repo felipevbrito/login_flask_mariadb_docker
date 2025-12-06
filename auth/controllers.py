@@ -12,15 +12,12 @@ def create_user(username, email, password):
     db.session.commit()
     return user
 
-
 def verify_password(user, password):
     return bcrypt.check_password_hash(user.password, password)
-
 
 def generate_reset_token(email):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])
     return serializer.dumps(email, salt='password-reset-salt')
-
 
 def confirm_reset_token(token, expiration=3600):
     serializer = URLSafeTimedSerializer(current_app.config['SECRET_KEY'])

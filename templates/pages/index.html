@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Bem-vindo{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>Bem-vindo ao sistema</h1>
+    <p>Para continuar, faça login:</p>
+    <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
+</div>
+{% endblock %}

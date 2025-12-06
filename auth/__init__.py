@@ -1,5 +1,9 @@
 from flask import Blueprint
 
-auth_bp = Blueprint('auth', __name__, template_folder='../templates', static_folder='../static')
+auth_bp = Blueprint(
+    'auth',
+    __name__,
+    url_prefix='/auth'
+)
 
-from . import routes # noqa: F401
+from . import routes
