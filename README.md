@@ -3,25 +3,61 @@
 ## 📁 Estrutura do Projeto
 program_login/
 │
-├── flask_auth/
-│   ├── app.py
-│   ├── config.py
-│   ├── models.py
-│   ├── requirements.txt
-│   │
-│   ├── templates/
-│   │   ├── pages/
-│   │   │   └── index.html
-│   │   ├── login.html
-│   │   ├── register.html
-│   │   ├── forgot.html
-│   │   ├── reset.html
-│   │   └── home.html
-│   │
-│   └── static/
-│       ├── favicon.ico
-│       └── style.css
+├── app.py
+├── config.py
+├── models.py
+├── extensions.py
+├── requirements.txt
+│ 
+├── auth/                
+│   ├── __init__.py
+│   ├── routes.py
+│   ├── forms.py
+│   └── controllers.py 
 │
+├── main/        
+│   ├── __init__.py
+│   └── routes.py
+│
+│──── templates/
+│   ├── authentication/
+│   │       ├── login.html
+│   │       ├── register.html
+│   │       ├── forgot.html
+│   │       ├── reset.html
+│   │       └── logout.html
+│   │
+│   ├── error/
+│   │       ├── 403.html
+│   │       ├── 404.html
+│   │       └── 500.html
+│   │
+│   ├── includes/
+│   │       ├── footer.html
+│   │       ├── head.html
+│   │       ├── navigation.html
+│   │       └── sidebar.html
+│   │
+│   ├── layouts/
+│   │       ├── base.html
+│   │       └── base-auth.html
+│   │
+│   └── pages/
+│           └── index.html
+│   
+├── static/
+│   ├── css/
+│   │     ├── custom.css
+│   │     └── forms.css
+│   ├── images/
+│   │     └── avatar.png
+│   ├── js/
+│   │     ├── index.js
+│   │     └── bootstrap.bundle.min.js
+│   └── icons/
+│         └── favicon.ico
+│
+├── .gitignore
 ├── start.sh
 ├── docker-compose.yml
 ├── Dockerfile

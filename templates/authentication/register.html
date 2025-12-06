@@ -1,0 +1,50 @@
+{% extends "layouts/base-auth.html" %}
+
+{% block title %}Registrar{% endblock %}
+
+{% block content %}
+
+<div class="auth-container">
+
+    <h2>Criar Conta</h2>
+
+    {# Mensagens flash #}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.username.label }}
+            {{ form.username(class="form-control", placeholder="Seu nome de usuário") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.email.label }}
+            {{ form.email(class="form-control", placeholder="email@exemplo.com") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.password.label }}
+            {{ form.password(class="form-control", placeholder="Digite sua senha") }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.confirm.label }}
+            {{ form.confirm(class="form-control", placeholder="Confirme sua senha") }}
+        </div>
+
+        {{ form.submit(class="btn") }}
+    </form>
+
+    <p class="mt-3">
+        Já tem conta?
+        <a href="{{ url_for('auth.login') }}">Entrar</a>
+    </p>
+
+</div>
+
+{% endblock %}
