@@ -16,4 +16,13 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return f"<User {self.username}>"
 
+class UserActivityLog(db.Model):
+    __tablename__ = "user_activity_log"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
+    action = db.Column(db.String(255), nullable=False)
+    ip_address = db.Column(db.String(50))
+    user_agent = db.Column(db.String(300))
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 

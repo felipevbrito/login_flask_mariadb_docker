@@ -1,19 +1,20 @@
-from flask import Flask, render_template, request
-from .config import Config
-from .extensions import db
-from .models import User
-from .extensions import login_manager
-from .auth.routes import auth_bp
-from .main.routes import main_bp
-from flask_wtf.csrf import CSRFProtect
 import os
+from flask import Flask, request, render_template
+from flask_login import current_user
+from app_login.config import Config
+from app_login.extensions import db, csrf, login_manager
+from app_login.utils import log_activity
+from app_login.models import User
+from app_login.auth.routes import auth_bp
+from app_login.main.routes import main_bp
 
-csrf = CSRFProtect()
 
 def create_app():
+    # Caminho do /static externo
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     STATIC_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
 
+    # Criação do app com static fora do pacote
     app = Flask(
         __name__,
         static_folder=STATIC_DIR,
@@ -21,13 +22,21 @@ def create_app():
     )
     app.config.from_object(Config)
 
-    # Inicializa CSRF
+    # Extensões
     csrf.init_app(app)
-
-    # Inicializa DB
     db.init_app(app)
 
-    # Inicializa Login Manager
+    # Rastrear acesso às páginas
+    @app.before_request
+    def track_page_access():
+        if current_user.is_authenticated:
+            path = request.path
+
+            # Ignora arquivos estáticos
+            if not path.startswith("/static"):
+                log_activity(current_user, f"Acessou a página {path}")
+
+    # Login Manager
     login_manager.init_app(app)
     login_manager.login_view = 'auth.login'
     login_manager.login_message_category = 'info'
@@ -35,25 +44,25 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
-    
-    # BLUEPRINTS
+
+    # Blueprints
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(main_bp)
 
-    # ERROR HANDLERS
+    # Error Handlers
     @app.errorhandler(404)
     def not_found(e):
-        return render_template('error/404.html'), 404
+        return render_template("error/404.html"), 404
 
     @app.errorhandler(403)
     def forbidden(e):
-        return render_template('error/403.html'), 403
+        return render_template("error/403.html"), 403
 
     @app.errorhandler(500)
     def server_error(e):
-        return render_template('error/500.html'), 500
+        return render_template("error/500.html"), 500
 
-    # Criação das tabelas
+    # Garante criação das tabelas (somente dev)
     with app.app_context():
         db.create_all()
 
