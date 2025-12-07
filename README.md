@@ -7,7 +7,6 @@ program_login/
 ├── config.py
 ├── models.py
 ├── extensions.py
-├── requirements.txt
 │ 
 ├── auth/                
 │   ├── __init__.py
@@ -37,16 +36,16 @@ program_login/
 │   │       ├── footer.html
 │   │       ├── head.html
 │   │       ├── navigation.html
-│   │       └── sidebar.html
+│   │       ├── sidebar.html
+│   │       └── modals/
+│   │                ├── modalContato.html
+│   │                ├── modalPrivacidade.html
+│   │                └── modalTermos.html
 │   │
 │   ├── layouts/
-│   │       ├── base.html
-│   │       └── base-auth.html
+│   │         ├── base.html
+│   │         └── base-auth.html
 │   │
-│   ├── modals/
-│   │       ├── modalContato.html
-│   │       ├── modalPrivacidade.html
-│   │       └── modalTermos.html
 │   │
 │   └── pages/
 │           ├── index.html
@@ -68,6 +67,7 @@ program_login/
 │         └── favicon.ico
 │
 ├── .gitignore
+├── requirements.txt
 ├── start.sh
 ├── docker-compose.yml
 ├── Dockerfile
