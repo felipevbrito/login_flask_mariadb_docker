@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %}Alterar Usuário{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+    <h3 class="text-center mb-4">Alterar Nome de Usuário </h3>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.username.label }}
+            {{ form.username(class="form-control", placeholder=current_user.username) }}
+        </div>
+
+        <button type="submit" class="btn btn-light btn-lg">Salvar</button>
+    </form>
+</div>
+{% endblock %}

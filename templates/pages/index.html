@@ -1,11 +1,41 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Bem-vindo{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="container text-center mt-5">
-    <h1>Bem-vindo ao sistema</h1>
-    <p>Para continuar, faça login:</p>
-    <a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
+
+<style>
+</style>
+
+
+<div class="d-flex">
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div id="content">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-dark">O que esse sistema faz?</h2>
+        </div>
+
+        <div class="card shadow-sm p-4">
+            <h4>Já possui:</h4>
+            <p class="text-muted mb-0">
+                <li> Cadastro de usuário;</li>
+                <li> Validação de segurança;</li>
+                <li> Proteção de url; </li>
+                <li> Alteração de dados de usuário logado; </li>
+                <li> Verificação de e-mail repedito; </li>
+            </p>
+            <h4>O que falta:</h4>
+            <p class="text-muted mb-0">
+                <li> Recuperar senha; </li>
+                <li> Níveis de acesso; </li>
+            </p>
+
+        </div>
+
+    </div>
+
 </div>
+
 {% endblock %}

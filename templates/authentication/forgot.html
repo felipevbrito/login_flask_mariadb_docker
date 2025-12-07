@@ -14,13 +14,16 @@
         {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('auth.forgot') }}" method="POST">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-        <input type="email" name="email" placeholder="Digite seu e-mail" required>
-        <button type="submit">Enviar Link</button>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.email.label }}
+        {{ form.email(class="form-control", placeholder="Digite seu e-mail") }}
+
+        {{ form.submit(class="btn") }}
     </form>
 
-    <p>
+    <p style="text-align:center; margin-top:12px;">
         <a href="{{ url_for('auth.login') }}">Voltar ao login</a>
     </p>
 

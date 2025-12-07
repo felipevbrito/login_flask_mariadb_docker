@@ -14,15 +14,19 @@
         {% endif %}
     {% endwith %}
 
-    <form action="{{ url_for('auth.reset', token=token) }}" method="POST">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-        <input type="password" name="password" placeholder="Nova Senha" required>
-        <input type="password" name="confirm" placeholder="Confirmar Senha" required>
+    <form method="POST" action="{{ url_for('auth.reset', token=token) }}">
+        {{ form.hidden_tag() }}
 
-        <button type="submit">Alterar</button>
+        {{ form.password.label }}
+        {{ form.password(class="form-control", placeholder="Nova senha") }}
+
+        {{ form.confirm.label }}
+        {{ form.confirm(class="form-control", placeholder="Confirmar nova senha") }}
+
+        {{ form.submit(class="btn") }}
     </form>
 
-    <p>
+    <p style="text-align:center; margin-top:12px;">
         <a href="{{ url_for('auth.login') }}">Voltar ao Login</a>
     </p>
 
