@@ -3,58 +3,59 @@
 ## 📁 Estrutura do Projeto
 program_login/
 │
-├── app.py
-├── config.py
-├── models.py
-├── extensions.py
-├── requirements.txt
-│ 
-├── auth/                
-│   ├── __init__.py
-│   ├── routes.py
-│   ├── validators.py
-│   ├── forms.py
-│   └── controllers.py 
+├── run.py
 │
-├── main/        
-│   ├── __init__.py
-│   └── routes.py
-│
-│──── templates/
-│   ├── authentication/
-│   │       ├── login.html
-│   │       ├── register.html
-│   │       ├── forgot.html
-│   │       ├── reset.html
-│   │       └── logout.html
+├── app_login/
+│   ├── app.py
+│   ├── config.py
+│   ├── extensions.py
+│   ├── models.py
 │   │
-│   ├── error/
-│   │       ├── 403.html
-│   │       ├── 404.html
-│   │       └── 500.html
+│   ├── auth/
+│   │     ├── __init__.py
+│   │     ├── routes.py
+│   │     ├── validators.py
+│   │     ├── forms.py
+│   │     └── controllers.py 
 │   │
-│   ├── includes/
-│   │       ├── footer.html
-│   │       ├── head.html
-│   │       ├── navigation.html
-│   │       └── sidebar.html
+│   ├── main/
+│   │     ├── __init__.py
+│   │     └── routes.py
 │   │
-│   ├── layouts/
-│   │       ├── base.html
-│   │       └── base-auth.html
-│   │
-│   ├── modals/
-│   │       ├── modalContato.html
-│   │       ├── modalPrivacidade.html
-│   │       └── modalTermos.html
-│   │
-│   └── pages/
-│           ├── index.html
-│           ├── profile-email.html
-│           ├── profile-name.html
-│           ├── profile-password.html
-│           └── profile.html
-│   
+│   └── templates/
+│           ├── authentication/
+│           │       ├── login.html
+│           │       ├── register.html
+│           │       ├── forgot.html
+│           │       ├── reset.html
+│           │       └── logout.html
+│           │
+│           ├── error/
+│           │       ├── 403.html
+│           │       ├── 404.html
+│           │       └── 500.html
+│           │
+│           ├── includes/
+│           │       ├── footer.html
+│           │       ├── head.html
+│           │       ├── navigation.html
+│           │       ├── sidebar.html
+│           │       └── modals/
+│           │                ├── modalContato.html
+│           │                ├── modalPrivacidade.html
+│           │                └── modalTermos.html
+│           │
+│           ├── layouts/
+│           │         ├── base.html
+│           │         └── base-auth.html
+│           │
+│           │
+│           └── pages/
+│                   ├── index.html
+│                   ├── profile-email.html
+│                   ├── profile-name.html
+│                   ├── profile-password.html
+│                   └── profile.html
 ├── static/
 │   ├── css/
 │   │     ├── custom.css
@@ -67,11 +68,13 @@ program_login/
 │   └── icons/
 │         └── favicon.ico
 │
-├── .gitignore
-├── start.sh
+├── requirements.txt
 ├── docker-compose.yml
 ├── Dockerfile
+├── .gitignore
+├── start.sh
 └── README.md
+
 
 ## 🗄️ Banco de Dados
 - Banco: **MariaDB**  

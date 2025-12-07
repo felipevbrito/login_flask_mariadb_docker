@@ -6,12 +6,19 @@ from .extensions import login_manager
 from .auth.routes import auth_bp
 from .main.routes import main_bp
 from flask_wtf.csrf import CSRFProtect
-
+import os
 
 csrf = CSRFProtect()
 
 def create_app():
-    app = Flask(__name__)
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    STATIC_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
+
+    app = Flask(
+        __name__,
+        static_folder=STATIC_DIR,
+        static_url_path='/static'
+    )
     app.config.from_object(Config)
 
     # Inicializa CSRF
@@ -51,9 +58,3 @@ def create_app():
         db.create_all()
 
     return app
-
-
-app = create_app()
-
-if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
