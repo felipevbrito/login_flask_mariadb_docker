@@ -11,6 +11,10 @@
         <div class="mb-3">
             {{ form.email.label }}
             {{ form.email(class="form-control", placeholder=current_user.email) }}
+
+            {% for error in form.email.errors %}
+                <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
         </div>
 
         <button type="submit" class="btn btn-light btn-lg">Salvar</button>

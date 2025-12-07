@@ -12,6 +12,7 @@ program_login/
 ├── auth/                
 │   ├── __init__.py
 │   ├── routes.py
+│   ├── validators.py
 │   ├── forms.py
 │   └── controllers.py 
 │
@@ -42,8 +43,17 @@ program_login/
 │   │       ├── base.html
 │   │       └── base-auth.html
 │   │
+│   ├── modals/
+│   │       ├── modalContato.html
+│   │       ├── modalPrivacidade.html
+│   │       └── modalTermos.html
+│   │
 │   └── pages/
-│           └── index.html
+│           ├── index.html
+│           ├── profile-email.html
+│           ├── profile-name.html
+│           ├── profile-password.html
+│           └── profile.html
 │   
 ├── static/
 │   ├── css/
@@ -69,7 +79,7 @@ program_login/
 - phpMyAdmin incluso para gerenciamento web do banco
 
 ## 🔐 Segurança implementada
-- Senhas hashadas com werkzeug.security
+- Senhas hashadas com BYCRYPT
 - Expiração automática de sessão (configuração de 30 min)
 - Proteção CSRF em formulários
 - Suporte a HTTPS seguro para cookies (configurável)

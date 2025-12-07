@@ -25,6 +25,10 @@
         <div class="mb-3">
             {{ form.email.label }}
             {{ form.email(class="form-control", placeholder="email@exemplo.com") }}
+
+            {% for error in form.email.errors %}
+                <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
         </div>
 
         <div class="mb-3">
