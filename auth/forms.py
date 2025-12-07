@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
+from .validators import validate_email
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Seu email"})
@@ -8,7 +10,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Entrar')
 class RegisterForm(FlaskForm):
     username = StringField('Usuário', validators=[DataRequired(), Length(min=3)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email(), validate_email])
     password = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
     confirm = PasswordField('Confirmar senha', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Registrar')
@@ -27,7 +29,7 @@ class ChangeUsernameForm(FlaskForm):
     username = StringField("Novo usuário", validators=[DataRequired(), Length(min=3, max=30)])
     submit_username = SubmitField("Atualizar usuário")
 class ChangeEmailForm(FlaskForm):
-    email = StringField("Novo e-mail", validators=[DataRequired(), Email()])
+    email = StringField('Novo E-mail', validators=[DataRequired(), Email(), validate_email])
     submit_email = SubmitField("Atualizar e-mail")
 class ChangePasswordForm(FlaskForm):
     current_password = PasswordField("Senha atual", validators=[DataRequired()])

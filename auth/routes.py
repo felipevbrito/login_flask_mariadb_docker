@@ -5,9 +5,9 @@ from ..models import User
 from ..extensions import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 from ..extensions import bcrypt
-
 from .controllers import create_user, verify_password, generate_reset_token, confirm_reset_token
-
+    
+#------ CRUD BASICO -----#
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -101,6 +101,7 @@ def profile_username():
 @login_required
 def profile_email():
     form = ChangeEmailForm()
+    form.current_user_id = current_user.id  
 
     if form.validate_on_submit():
         current_user.email = form.email.data
