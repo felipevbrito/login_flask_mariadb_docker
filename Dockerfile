@@ -16,6 +16,12 @@ RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # ------------------------------------
+# Variáveis padrão
+# ------------------------------------
+ENV FLASK_APP=run.py
+ENV FLASK_ENV=development
+
+# ------------------------------------
 # Porta e comando de inicialização
 # ------------------------------------
 EXPOSE 5000
