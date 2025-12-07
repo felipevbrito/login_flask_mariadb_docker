@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from .config import Config
-from .models import db, User
+from .extensions import db
+from .models import User
 from .extensions import login_manager
 from .auth.routes import auth_bp
 from .main.routes import main_bp
@@ -28,13 +29,6 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
     
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
-
-    @app.before_request
-    def log_request():
-        logging.debug(f"Rota chamada: {request.path}")
-
     # BLUEPRINTS
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(main_bp)

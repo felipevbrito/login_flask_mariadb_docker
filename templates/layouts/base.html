@@ -10,9 +10,39 @@
 </head>
 
 <body style="display:flex; flex-direction:column; min-height:100vh; margin:0;">
+
     {% include "includes/sidebar.html" %}
     <div class="main-content">
         {% include "includes/navigation.html" %}
+
+        <!-- PARA MENSAGENS  -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <script>
+                    // Remove alertas automaticamente após 5 segundos
+                    setTimeout(function () {
+                        let alerts = document.querySelectorAll('.alert');
+                        alerts.forEach(alert => {
+                            alert.classList.remove('show');
+                            alert.classList.add('fade');
+                            setTimeout(() => alert.remove(), 300);
+                        });
+                    }, 5000);
+                </script>
+            {% endif %}
+        {% endwith %}
+
+        <!-- FIM DO CAMPO DE MENSAGENS -->
+
         <section class="content-area">
             {% block content %}{% endblock %}
         </section>
@@ -21,4 +51,12 @@
     {% include "includes/footer.html" %}
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
+
+<script>
+document.getElementById("sidebarToggle").addEventListener("click", function () {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+});
+</script>
+
+
 </html>

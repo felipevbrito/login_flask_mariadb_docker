@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+{% block title %}Alterar E-mail{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 600px;">
+    <h3 class="text-center mb-4">Alterar E-mail</h3>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.email.label }}
+            {{ form.email(class="form-control", placeholder=current_user.email) }}
+        </div>
+
+        <button type="submit" class="btn btn-light btn-lg">Salvar</button>
+    </form>
+</div>
+{% endblock %}

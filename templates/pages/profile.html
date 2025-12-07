@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 700px;">
+
+    <h2 class="text-center mb-4">Configurações da Conta</h2>
+
+    <div class="card shadow-sm custom-card">
+        <div class="card-body">
+
+            <p class="text-muted mb-4 text-center">
+                Escolha uma das opções abaixo para atualizar seus dados.
+            </p>
+
+            <div class="d-grid gap-3">
+
+                <!-- Alterar Usuário -->
+                <a href="{{ url_for('auth.profile_username') }}"
+                   class="btn btn-light btn-lg">
+                    Alterar Nome de Usuário
+                </a>
+
+                <!-- Alterar Email -->
+                <a href="{{ url_for('auth.profile_email') }}"
+                   class="btn btn-light btn-lg">
+                    Alterar E-mail
+                </a>
+
+                <!-- Alterar Senha -->
+                <a href="{{ url_for('auth.profile_password') }}"
+                   class="btn btn-light btn-lg">
+                    Alterar Senha
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}
