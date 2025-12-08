@@ -1,6 +1,6 @@
 from flask import render_template
 from . import main_bp
-from flask_login import login_required, current_user
+from flask_login import login_required
 
 @main_bp.route('/')
 @main_bp.route('/index')
@@ -8,5 +8,4 @@ from flask_login import login_required, current_user
 
 @login_required
 def index():
-    print("AUTH:", current_user.is_authenticated)
     return render_template('pages/index.html')

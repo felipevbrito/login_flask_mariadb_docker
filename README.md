@@ -10,11 +10,18 @@ program_login/
 │   ├── config.py
 │   ├── extensions.py
 │   ├── models.py
+│   ├── utils.py
 │   │
 │   ├── auth/
 │   │     ├── __init__.py
 │   │     ├── routes.py
 │   │     ├── validators.py
+│   │     ├── forms.py
+│   │     └── controllers.py 
+│   │
+│   ├── users/
+│   │     ├── __init__.py
+│   │     ├── routes.py
 │   │     ├── forms.py
 │   │     └── controllers.py 
 │   │
@@ -87,7 +94,7 @@ program_login/
 - Proteção CSRF em formulários
 - Suporte a HTTPS seguro para cookies (configurável)
 - Limitar tentativas de login
-- Log de atividades (audit trail)
+- Log de atividades (direto no banco)
 
 ## ⚡️ Melhorias futuras
 - Suporte a múltiplos perfis de usuário / permissões

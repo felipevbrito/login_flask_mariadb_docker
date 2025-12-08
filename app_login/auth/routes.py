@@ -6,7 +6,8 @@ from ..extensions import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 from ..extensions import bcrypt
 from .controllers import create_user, verify_password, generate_reset_token, confirm_reset_token
-    
+from datetime import datetime
+
 #------ CRUD BASICO -----#
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -16,7 +17,10 @@ def login():
         email = form.email.data
         password = form.password.data
         user = User.query.filter_by(email=email).first()
+        
         if user and verify_password(user, password):
+            user.last_access = datetime.utcnow()
+            db.session.commit()
             login_user(user)
             flash('Bem-vindo ao sistema!', 'success')
             return redirect(url_for('main.index'))
@@ -36,6 +40,8 @@ def register():
 @auth_bp.route('/logout')
 @login_required
 def logout():
+    current_user.last_access = datetime.utcnow()
+    db.session.commit()
     logout_user()
     flash('Você saiu da sessão.', 'info')
     return redirect(url_for('auth.login'))
