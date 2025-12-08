@@ -8,6 +8,8 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
+    role = db.Column(db.String(20), nullable=False, default="user") # opções: "admin", "gestor", "user"
+    last_access = db.Column(db.DateTime, nullable=True)
     reset_token = db.Column(db.String(255), nullable=True)
     token_expires = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.String(20), nullable=False, default='active') # valores: active / inactive / deleted

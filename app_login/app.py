@@ -7,6 +7,8 @@ from app_login.utils import log_activity
 from app_login.models import User
 from app_login.auth.routes import auth_bp
 from app_login.main.routes import main_bp
+from app_login.users import users_bp
+
 
 
 def create_app():
@@ -48,6 +50,7 @@ def create_app():
     # Blueprints
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(main_bp)
+    app.register_blueprint(users_bp)
 
     # Error Handlers
     @app.errorhandler(404)

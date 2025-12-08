@@ -1,0 +1,79 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Usuários{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-dark">Gestão de Usuários</h2>
+
+    <a href="#" class="btn btn-primary">
+        <i class="bi bi-person-plus me-1"></i> Novo Usuário
+    </a>
+</div>
+
+<div class="card shadow-sm p-4">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Nível</th>
+                <th>Status</th>
+                <th>Ultimo Acesso</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.role == 'admin' %}
+                        Administrador
+                    {% elif user.role == 'gestor' %}
+                        Gestor
+                    {% else %}
+                        Usuário
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.status == "active" %}
+                        <span title="Ativo" style="color: green; font-size: 20px;">✅</span>
+                    {% elif user.status == "inactive" %}
+                        <span title="Inativo" style="color: orange; font-size: 20px;">⚠️</span>
+                    {% elif user.status == "deleted" %}
+                        <span title="Excluído" style="color: red; font-size: 20px;">❌</span>
+                    {% else %}
+                        <span title="Desconhecido">❓</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.last_access %}
+                        {{ user.last_access.strftime('%d/%m/%Y %H:%M') }}
+                    {% else %}
+                        <span class="text-muted">----</span>
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <a href="#" class="btn btn-sm btn-info">Ver</a>
+                    <a href="#" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="#" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Apagar este usuário?')">
+                        Excluir
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center text-muted">Nenhum usuário cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
