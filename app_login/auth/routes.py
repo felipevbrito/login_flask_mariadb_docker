@@ -6,7 +6,8 @@ from ..extensions import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 from ..extensions import bcrypt
 from .controllers import create_user, verify_password, generate_reset_token, confirm_reset_token
-    
+from datetime import datetime
+
 #------ CRUD BASICO -----#
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -16,10 +17,13 @@ def login():
         email = form.email.data
         password = form.password.data
         user = User.query.filter_by(email=email).first()
+        
         if user and verify_password(user, password):
+            user.last_access = datetime.utcnow()
+            db.session.commit()
             login_user(user)
             flash('Bem-vindo ao sistema!', 'success')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('home.index'))
         flash('Email ou senha inválidos.', 'danger')
 
     return render_template('authentication/login.html', form=form)
@@ -36,6 +40,8 @@ def register():
 @auth_bp.route('/logout')
 @login_required
 def logout():
+    current_user.last_access = datetime.utcnow()
+    db.session.commit()
     logout_user()
     flash('Você saiu da sessão.', 'info')
     return redirect(url_for('auth.login'))
@@ -92,7 +98,7 @@ def profile_username():
         current_user.username = form.username.data
         db.session.commit()
         flash("Usuário atualizado com sucesso!", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("home.index"))
 
     return render_template('pages/profile-name.html', form=form)
 
@@ -107,7 +113,7 @@ def profile_email():
         current_user.email = form.email.data
         db.session.commit()
         flash("E-mail atualizado com sucesso!", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("home.index"))
 
     return render_template('pages/profile-email.html', form=form)
 
@@ -126,7 +132,7 @@ def profile_password():
         db.session.commit()
 
         flash("Senha alterada com sucesso!", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("home.index"))
 
     return render_template('pages/profile-password.html', form=form)
 

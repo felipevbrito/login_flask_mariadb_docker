@@ -9,56 +9,46 @@
     {% include "includes/head.html" %}
 </head>
 
-<body style="display:flex; flex-direction:column; min-height:100vh; margin:0;">
 
-    {% include "includes/sidebar.html" %}
-    <div class="main-content">
-        {% include "includes/navigation.html" %}
+<body class="d-flex flex-column min-vh-100">
+    {% include "includes/navigation.html" %}
 
-        <!-- PARA MENSAGENS  -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="container mt-3">
+    <div class="d-flex flex-grow-1">
+        {% include "includes/sidebar.html" %}
+
+        <main class="flex-grow-1 p-4">
+
+            <!-- ALERTAS DEVEM FICAR AQUI -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
                     {% for category, message in messages %}
                         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
                             {{ message }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                         </div>
                     {% endfor %}
-                </div>
+                {% endif %}
+            {% endwith %}
 
-                <script>
-                    // Remove alertas automaticamente após 5 segundos
-                    setTimeout(function () {
-                        let alerts = document.querySelectorAll('.alert');
-                        alerts.forEach(alert => {
-                            alert.classList.remove('show');
-                            alert.classList.add('fade');
-                            setTimeout(() => alert.remove(), 300);
-                        });
-                    }, 5000);
-                </script>
-            {% endif %}
-        {% endwith %}
+            <script>
+            setTimeout(function () {
+                let alerts = document.querySelectorAll('.alert');
+                alerts.forEach(alert => {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+                    setTimeout(() => alert.remove(), 300);
+                });
+            }, 5000);
+            </script>
+            <!-- FIM DO ALERTA -->
 
-        <!-- FIM DO CAMPO DE MENSAGENS -->
-
-        <section class="content-area">
             {% block content %}{% endblock %}
-        </section>
+        </main>
     </div>
 
     {% include "includes/footer.html" %}
+
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
-<script>
-document.getElementById("sidebarToggle").addEventListener("click", function () {
-    document.getElementById("sidebar").classList.toggle("collapsed");
-});
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
 </html>

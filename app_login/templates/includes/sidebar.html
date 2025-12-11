@@ -1,0 +1,34 @@
+<div id="sidebar" class="sidebar expanded bg-light border-end">
+    
+    <div class="sidebar-header d-flex justify-content-between align-items-center px-3 py-2">
+        <span class="fw-bold sidebar-title">Menu</span>
+        <i id="sidebarToggle" class="bi bi-list fs-4 cursor-pointer"></i>
+    </div>
+
+    {% if current_user.role in ["admin"] %}
+        <a href="{{ url_for('users.users_list') }}" 
+        class="sidebar-item d-flex align-items-center">
+            <i class="bi bi-people-fill me-2"></i>
+            <span class="sidebar-text">Usuários</span>
+        </a>
+    {% endif %}
+    {% if current_user.role in ["gestor"] %}
+        <a href="#" 
+        class="sidebar-item d-flex align-items-center">
+            <i class="bi bi-people-fill me-2"></i>
+            <span class="sidebar-text">Gestor</span>
+        </a>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("sidebar");
+    const toggle = document.getElementById("sidebarToggle");
+
+    toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("collapsed");
+    });
+});
+</script>
+

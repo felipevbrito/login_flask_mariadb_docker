@@ -6,29 +6,37 @@ program_login/
 ├── run.py
 │
 ├── app_login/
+│   ├── __init__.py
 │   ├── app.py
 │   ├── config.py
 │   ├── extensions.py
 │   ├── models.py
+│   ├── utils.py
 │   │
 │   ├── auth/
 │   │     ├── __init__.py
-│   │     ├── routes.py
-│   │     ├── validators.py
+│   │     ├── controllers.py
 │   │     ├── forms.py
-│   │     └── controllers.py 
+│   │     ├── routes.py
+│   │     └── validators.py 
 │   │
-│   ├── main/
+│   ├── users/
+│   │     ├── __init__.py
+│   │     ├── controllers.py
+│   │     ├── forms.py
+│   │     └── routes.py 
+│   │
+│   ├── home/
 │   │     ├── __init__.py
 │   │     └── routes.py
 │   │
 │   └── templates/
 │           ├── authentication/
-│           │       ├── login.html
-│           │       ├── register.html
 │           │       ├── forgot.html
-│           │       ├── reset.html
-│           │       └── logout.html
+│           │       ├── login.html
+│           │       ├── logout.html
+│           │       ├── register.html
+│           │       └── reset.html
 │           │
 │           ├── error/
 │           │       ├── 403.html
@@ -46,16 +54,22 @@ program_login/
 │           │                └── modalTermos.html
 │           │
 │           ├── layouts/
-│           │         ├── base.html
-│           │         └── base-auth.html
+│           │         ├── base-auth.html
+│           │         └── base.html
 │           │
 │           │
-│           └── pages/
-│                   ├── index.html
-│                   ├── profile-email.html
-│                   ├── profile-name.html
-│                   ├── profile-password.html
-│                   └── profile.html
+│           ├── pages/
+│           │       ├── index.html
+│           │       ├── profile-email.html
+│           │       ├── profile-name.html
+│           │       ├── profile-password.html
+│           │       └── profile.html
+│           │
+│           └── users/
+│                   ├── users-edit.html
+│                   ├── users-list.html
+│                   └── users-view.html
+│
 ├── static/
 │   ├── css/
 │   │     ├── custom.css
@@ -87,7 +101,7 @@ program_login/
 - Proteção CSRF em formulários
 - Suporte a HTTPS seguro para cookies (configurável)
 - Limitar tentativas de login
-- Log de atividades (audit trail)
+- Log de atividades (direto no banco)
 
 ## ⚡️ Melhorias futuras
 - Suporte a múltiplos perfis de usuário / permissões
