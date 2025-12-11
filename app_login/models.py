@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     last_access = db.Column(db.DateTime, nullable=True)
     reset_token = db.Column(db.String(255), nullable=True)
     token_expires = db.Column(db.DateTime, nullable=True)
+    session_token = db.Column(db.String(255), nullable=True)
     status = db.Column(db.String(20), nullable=False, default='active') # valores: active / inactive / deleted
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 

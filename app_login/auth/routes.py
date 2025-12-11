@@ -7,7 +7,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from ..extensions import bcrypt
 from .controllers import create_user, verify_password, generate_reset_token, confirm_reset_token
 from datetime import datetime
-
+import secrets
 
 #------ CRUD BASICO -----#
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -21,9 +21,12 @@ def login():
         
         if user and verify_password(user, password):
             user.last_access = datetime.utcnow()
+            token = secrets.token_hex(32) #gera token session
+            user.session_token = token  
             db.session.commit()
             login_user(user)
-            session.permanent = True
+            session.permanent = True      #para deslogar depois de um tempo
+            session['session_token'] = user.session_token
             flash('Bem-vindo ao sistema!', 'success')
             return redirect(url_for('home.index'))
         flash('Email ou senha inválidos.', 'danger')
@@ -137,5 +140,3 @@ def profile_password():
         return redirect(url_for("home.index"))
 
     return render_template('pages/profile-password.html', form=form)
-
-
