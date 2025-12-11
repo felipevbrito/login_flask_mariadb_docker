@@ -8,6 +8,9 @@ from app_login.models import User
 from app_login.auth.routes import auth_bp
 from app_login.home.routes import home_bp
 from app_login.users import users_bp
+from datetime import timedelta
+
+
 
 def create_app():
     # Caminho do /static externo
@@ -21,7 +24,8 @@ def create_app():
         static_url_path='/static'
     )
     app.config.from_object(Config)
-
+    app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=20)
+    
     # Extensões
     csrf.init_app(app)
     db.init_app(app)

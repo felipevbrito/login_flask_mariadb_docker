@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, session
 from . import auth_bp
 from .forms import LoginForm, RegisterForm, ForgotForm, ResetForm, ChangeUsernameForm, ChangeEmailForm, ChangePasswordForm
 from ..models import User
@@ -7,6 +7,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from ..extensions import bcrypt
 from .controllers import create_user, verify_password, generate_reset_token, confirm_reset_token
 from datetime import datetime
+
 
 #------ CRUD BASICO -----#
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -22,6 +23,7 @@ def login():
             user.last_access = datetime.utcnow()
             db.session.commit()
             login_user(user)
+            session.permanent = True
             flash('Bem-vindo ao sistema!', 'success')
             return redirect(url_for('home.index'))
         flash('Email ou senha inválidos.', 'danger')

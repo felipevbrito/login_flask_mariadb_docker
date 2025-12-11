@@ -9,16 +9,21 @@
         <a href="{{ url_for('users.users_list') }}" 
         class="sidebar-item d-flex align-items-center">
             <i class="bi bi-people-fill me-2"></i>
-            <span class="sidebar-text">Usuários</span>
+            <span class="sidebar-text">Admin</span>
         </a>
     {% endif %}
     {% if current_user.role in ["gestor"] %}
         <a href="#" 
         class="sidebar-item d-flex align-items-center">
-            <i class="bi bi-people-fill me-2"></i>
+            <i class="bi bi-person-vcard-fill me-2"></i>
             <span class="sidebar-text">Gestor</span>
         </a>
     {% endif %}
+        <a href="#" 
+        class="sidebar-item d-flex align-items-center">
+            <i class="bi bi-person-fill me-2"></i>
+            <span class="sidebar-text">Comum</span>
+        </a>
 </div>
 
 <script>
