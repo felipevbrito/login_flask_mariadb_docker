@@ -23,7 +23,7 @@ def login():
             db.session.commit()
             login_user(user)
             flash('Bem-vindo ao sistema!', 'success')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('home.index'))
         flash('Email ou senha inválidos.', 'danger')
 
     return render_template('authentication/login.html', form=form)
@@ -98,7 +98,7 @@ def profile_username():
         current_user.username = form.username.data
         db.session.commit()
         flash("Usuário atualizado com sucesso!", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("home.index"))
 
     return render_template('pages/profile-name.html', form=form)
 
@@ -113,7 +113,7 @@ def profile_email():
         current_user.email = form.email.data
         db.session.commit()
         flash("E-mail atualizado com sucesso!", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("home.index"))
 
     return render_template('pages/profile-email.html', form=form)
 
@@ -132,7 +132,7 @@ def profile_password():
         db.session.commit()
 
         flash("Senha alterada com sucesso!", "success")
-        return redirect(url_for("main.index"))
+        return redirect(url_for("home.index"))
 
     return render_template('pages/profile-password.html', form=form)
 

@@ -6,6 +6,7 @@ program_login/
 ├── run.py
 │
 ├── app_login/
+│   ├── __init__.py
 │   ├── app.py
 │   ├── config.py
 │   ├── extensions.py
@@ -14,28 +15,28 @@ program_login/
 │   │
 │   ├── auth/
 │   │     ├── __init__.py
-│   │     ├── routes.py
-│   │     ├── validators.py
+│   │     ├── controllers.py
 │   │     ├── forms.py
-│   │     └── controllers.py 
+│   │     ├── routes.py
+│   │     └── validators.py 
 │   │
 │   ├── users/
 │   │     ├── __init__.py
-│   │     ├── routes.py
+│   │     ├── controllers.py
 │   │     ├── forms.py
-│   │     └── controllers.py 
+│   │     └── routes.py 
 │   │
-│   ├── main/
+│   ├── home/
 │   │     ├── __init__.py
 │   │     └── routes.py
 │   │
 │   └── templates/
 │           ├── authentication/
-│           │       ├── login.html
-│           │       ├── register.html
 │           │       ├── forgot.html
-│           │       ├── reset.html
-│           │       └── logout.html
+│           │       ├── login.html
+│           │       ├── logout.html
+│           │       ├── register.html
+│           │       └── reset.html
 │           │
 │           ├── error/
 │           │       ├── 403.html
@@ -53,16 +54,22 @@ program_login/
 │           │                └── modalTermos.html
 │           │
 │           ├── layouts/
-│           │         ├── base.html
-│           │         └── base-auth.html
+│           │         ├── base-auth.html
+│           │         └── base.html
 │           │
 │           │
-│           └── pages/
-│                   ├── index.html
-│                   ├── profile-email.html
-│                   ├── profile-name.html
-│                   ├── profile-password.html
-│                   └── profile.html
+│           ├── pages/
+│           │       ├── index.html
+│           │       ├── profile-email.html
+│           │       ├── profile-name.html
+│           │       ├── profile-password.html
+│           │       └── profile.html
+│           │
+│           └── users/
+│                   ├── users-edit.html
+│                   ├── users-list.html
+│                   └── users-view.html
+│
 ├── static/
 │   ├── css/
 │   │     ├── custom.css

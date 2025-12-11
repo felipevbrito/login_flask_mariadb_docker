@@ -12,6 +12,13 @@
             <span class="sidebar-text">Usuários</span>
         </a>
     {% endif %}
+    {% if current_user.role in ["gestor"] %}
+        <a href="#" 
+        class="sidebar-item d-flex align-items-center">
+            <i class="bi bi-people-fill me-2"></i>
+            <span class="sidebar-text">Gestor</span>
+        </a>
+    {% endif %}
 </div>
 
 <script>
