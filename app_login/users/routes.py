@@ -25,12 +25,27 @@ def role_required(*roles):
     return decorator
 
 #LINK SIDEBAR PARA USER-LIST
-@users_bp.route("/")
+@users_bp.route("/admin")
 @login_required
 @role_required("admin")
 def users_list():
     users = User.query.all()
     return render_template("users/users-list.html", users=users)
+
+#LINK SIDEBAR PARA USER-GESTOR
+@users_bp.route("/gestor")
+@login_required
+@role_required("gestor")
+def users_gestor():
+    users = User.query.all()
+    return render_template("users/users-gestor.html", users=users)
+
+#LINK SIDEBAR PARA USER
+@users_bp.route("/usuario")
+@login_required
+def users():
+    users = User.query.all()
+    return render_template("users/users.html", users=users)
 
 #PAGINA DE USER-EDIT
 @users_bp.route("/users/edit/<int:user_id>", methods=["GET", "POST"])

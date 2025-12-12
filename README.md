@@ -10,7 +10,6 @@
     │   ├── app.py
     │   ├── config.py
     │   ├── extensions.py
-    │   ├── models.py
     │   ├── utils.py
     │   │
     │   ├── auth/
@@ -26,9 +25,16 @@
     │   │     ├── forms.py
     │   │     └── routes.py 
     │   │
-    │   └── home/
-    │         ├── __init__.py
-    │         └── routes.py
+    │   ├── home/
+    │   │     ├── __init__.py
+    │   │     └── routes.py
+    │   │
+    │   ├── models/
+    │   │     ├── auth.py
+    │   │     └── users.py
+    │   │
+    │   └── module/
+    │         └── teste.py
     │   
     ├── templates/
     │           ├── authentication/

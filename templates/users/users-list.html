@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="text-dark">Gestão de Usuários</h2>
+    <h2 class="text-dark">Administração de Usuários</h2>
 
     <a href="#" class="btn btn-primary">
         <i class="bi bi-person-plus me-1"></i> Novo Usuário
@@ -61,10 +61,6 @@
                 <td class="text-end">
                     <a href="#" class="btn btn-sm btn-info">Ver</a>
                     <a href="{{ url_for('users.users_edit', user_id=user.id) }}"  class="btn btn-sm btn-warning"> Editar </a>
-                    <a href="#" class="btn btn-sm btn-danger"
-                       onclick="return confirm('Apagar este usuário?')">
-                        Excluir
-                    </a>
                 </td>
             </tr>
             {% else %}
