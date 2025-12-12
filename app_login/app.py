@@ -10,19 +10,14 @@ from app_login.home.routes import home_bp
 from app_login.users import users_bp
 from datetime import timedelta
 
-
-
 def create_app():
-    # Caminho do /static externo
+    # Caminhos externos do /template e /static
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    TEMPLATE_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'templates'))
     STATIC_DIR = os.path.abspath(os.path.join(BASE_DIR, '..', 'static'))
 
     # Criação do app com static fora do pacote
-    app = Flask(
-        __name__,
-        static_folder=STATIC_DIR,
-        static_url_path='/static'
-    )
+    app = Flask(__name__, template_folder=TEMPLATE_DIR, static_folder=STATIC_DIR, static_url_path='/static')
     app.config.from_object(Config)
     app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=20)
 
