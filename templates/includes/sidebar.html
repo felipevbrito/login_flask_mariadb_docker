@@ -13,13 +13,13 @@
         </a>
     {% endif %}
     {% if current_user.role in ["gestor"] %}
-        <a href="#" 
+        <a href="{{ url_for('users.users_gestor') }}" 
         class="sidebar-item d-flex align-items-center">
             <i class="bi bi-person-vcard-fill me-2"></i>
             <span class="sidebar-text">Gestor</span>
         </a>
     {% endif %}
-        <a href="#" 
+        <a href="{{ url_for('users.users') }}" 
         class="sidebar-item d-flex align-items-center">
             <i class="bi bi-person-fill me-2"></i>
             <span class="sidebar-text">Comum</span>
