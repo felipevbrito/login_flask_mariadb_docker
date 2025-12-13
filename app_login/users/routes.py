@@ -1,6 +1,6 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
-from app_login.models import User, db
+from app_login.models.auth import User, db
 from . import users_bp
 from .forms import EditUserForm
 from functools import wraps

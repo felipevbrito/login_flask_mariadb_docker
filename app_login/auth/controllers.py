@@ -1,4 +1,4 @@
-from ..models import User
+from ..models.auth import User
 from ..extensions import db, bcrypt
 from itsdangerous import URLSafeTimedSerializer
 from flask import current_app

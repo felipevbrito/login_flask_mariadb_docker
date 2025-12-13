@@ -1,6 +1,6 @@
 from flask import request
 from app_login.extensions import db
-from app_login.models import UserActivityLog
+from app_login.models.auth import UserActivityLog
 import re
 from datetime import datetime, date
 

@@ -1,5 +1,5 @@
 from wtforms.validators import ValidationError
-from ..models import User
+from ..models.auth import User
 
 def validate_email(form, field):
     existing = User.query.filter_by(email=field.data).first()
