@@ -19,19 +19,18 @@
     │   │     ├── routes.py
     │   │     └── validators.py 
     │   │
-    │   ├── users/
-    │   │     ├── __init__.py
-    │   │     ├── controllers.py
-    │   │     ├── forms.py
-    │   │     └── routes.py 
-    │   │
     │   ├── home/
     │   │     ├── __init__.py
     │   │     └── routes.py
     │   │
     │   ├── models/
-    │   │     ├── auth.py
-    │   │     └── users.py
+    │   │     └── auth.py
+    │   │
+    │   ├── users/
+    │   │     ├── __init__.py
+    │   │     ├── controllers.py
+    │   │     ├── forms.py
+    │   │     └── routes.py 
     │   │
     │   └── module/
     │         └── teste.py
