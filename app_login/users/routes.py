@@ -1,11 +1,11 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
-from app_login.models.auth import User, db
+from app_login.models.auth import User, UserActivityLog, db
 from . import users_bp
 from .forms import EditUserForm
 from functools import wraps
 from flask import redirect, url_for, flash
-from app_login.utils import log_activity
+from app_login.utils import log_activity, parse_browser
 
 ## Permite acesso somente de usuários especificos##
 def role_required(*roles):
@@ -46,6 +46,41 @@ def users_gestor():
 def users():
     users = User.query.all()
     return render_template("users/users.html", users=users)
+
+# PÁGINA DE USER-VIEW (ADMIN)
+@users_bp.route("/users/view/<int:user_id>", methods=["GET"])
+@login_required
+@role_required("admin")
+def users_view(user_id):
+
+    # Usuário visualizado
+    user = User.query.get_or_404(user_id)
+
+    # Últimas 5 atividades do usuário
+    activities = (
+        UserActivityLog.query
+        .filter_by(user_id=user.id)
+        .order_by(UserActivityLog.timestamp.desc())
+        .limit(5)
+        .all()
+    )
+
+    # Log da ação administrativa
+    for log in activities:
+        log.browser = parse_browser(log.user_agent)
+        
+
+    log_activity(
+        current_user,
+        f"Visualizou detalhes do usuário ({user.username})"
+    )
+    db.session.commit()
+
+    return render_template(
+        "users/users-view.html",
+        user=user,
+        activities=activities
+    )
 
 #PAGINA DE USER-EDIT
 @users_bp.route("/users/edit/<int:user_id>", methods=["GET", "POST"])

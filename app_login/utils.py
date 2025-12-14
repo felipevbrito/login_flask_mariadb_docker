@@ -123,3 +123,28 @@ def calcular_idade(data_nascimento: str) -> int:
         idade -= 1
 
     return idade
+
+
+# ---------------------------------------------------------
+# 8) LIMPAR VISUALIZADOR DE ACESSOS
+# ---------------------------------------------------------
+def parse_browser(user_agent: str) -> str:
+    if not user_agent:
+        return "-"
+
+    ua = user_agent.lower()
+
+    if "edg" in ua:
+        return "Edge"
+    if "chrome" in ua and "safari" in ua:
+        return "Chrome"
+    if "firefox" in ua:
+        return "Firefox"
+    if "safari" in ua and "chrome" not in ua:
+        return "Safari"
+    if "opera" in ua or "opr" in ua:
+        return "Opera"
+    if "msie" in ua or "trident" in ua:
+        return "Internet Explorer"
+
+    return "Desconhecido"

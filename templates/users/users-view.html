@@ -1,0 +1,129 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Detalhes do Usuário{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- TÍTULO -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark">Detalhes do Usuário</h2>
+    </div>
+
+    <!-- DADOS DO USUÁRIO -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header fw-bold">
+            Dados do Usuário
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <strong>Nome:</strong><br>
+                    {{ user.username }}
+                </div>
+                <div class="col-md-4 mb-2">
+                    <strong>E-mail:</strong><br>
+                    {{ user.email }}
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <strong>Status:</strong><br>
+                    {% if user.status == "active" %}
+                        <span class="badge bg-success">Ativo</span>
+                    {% elif user.status == "inactive" %}
+                        <span class="badge bg-warning text-dark">Inativo</span>
+                    {% elif user.status == "deleted" %}
+                        <span class="badge bg-danger">Excluído</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Desconhecido</span>
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <strong>Papel:</strong><br>
+                    {% if user.role == "admin" %}
+                        Administrador
+                    {% elif user.role == "gestor" %}
+                        Gestor
+                    {% else %}
+                        Usuário
+                    {% endif %}
+                </div>
+
+                <div class="col-md-4 mb-2">
+                    <strong>Último acesso:</strong><br>
+                    {% if user.last_access %}
+                        {{ user.last_access.strftime('%d/%m/%Y %H:%M') }}
+                    {% else %}
+                        <span class="text-muted">Nunca acessou</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ATIVIDADES RECENTES -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header fw-bold">
+            Atividades Recentes
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Ação</th>
+                        <th>Navegador</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in activities %}
+                    <tr>
+                        <td>{{ log.timestamp.strftime('%d/%m/%Y %H:%M') }}</td>
+                        <td>{{ log.action }}</td>
+                        <td>{{ log.browser }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">
+                            Nenhuma atividade registrada.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- AÇÕES ADMINISTRATIVAS -->
+    <div class="card shadow-sm mb-4 border-danger">
+        <div class="card-header fw-bold text-danger">
+            Ações Administrativas
+        </div>
+        <div class="card-body">
+
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ url_for('users.users_edit', user_id=user.id) }}"
+                   class="btn btn-warning">
+                    <i class="bi bi-pencil-square"></i> Editar Usuário
+                </a>
+                {% if current_user.id != user.id %}
+                    <a href="#"
+                    class="btn btn-outline-primary"
+                    onclick="return confirm('Forçar redefinição de senha?');">
+                        <i class="bi bi-key"></i> Redefinir Senha
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
