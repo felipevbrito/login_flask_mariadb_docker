@@ -23,6 +23,17 @@
         {{ form.submit(class="btn") }}
     </form>
 
+    {% if token %}
+    <div class="alert alert-info mt-3">
+        <strong>Token (demo):</strong><br>
+        {{ token }}<br><br>
+        <a href="{{ url_for('auth.reset', token=token) }}">
+            Ir para redefinição de senha
+        </a>
+    </div>
+    {% endif %}
+
+
     <p style="text-align:center; margin-top:12px;">
         <a href="{{ url_for('auth.login') }}">Voltar ao login</a>
     </p>

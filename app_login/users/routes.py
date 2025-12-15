@@ -5,7 +5,7 @@ from . import users_bp
 from .forms import EditUserForm
 from functools import wraps
 from flask import redirect, url_for, flash
-from app_login.utils import log_activity, parse_browser
+from app_login.utils import log_activity, parse_browser, paginate
 
 ## Permite acesso somente de usuários especificos##
 def role_required(*roles):
@@ -29,8 +29,10 @@ def role_required(*roles):
 @login_required
 @role_required("admin")
 def users_list():
-    users = User.query.all()
-    return render_template("users/users-list.html", users=users)
+    page = request.args.get("page", 1, type=int)
+    pagination = paginate(db.select(User), page=page, per_page=10)
+
+    return render_template("users/users-list.html",users=pagination.items, pagination=pagination)
 
 #LINK SIDEBAR PARA USER-GESTOR
 @users_bp.route("/gestor")

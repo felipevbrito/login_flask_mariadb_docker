@@ -3,6 +3,8 @@ from app_login.extensions import db
 from app_login.models.auth import UserActivityLog
 import re
 from datetime import datetime, date
+from flask_sqlalchemy import Pagination
+
 
 # ---------------------------------------------------------
 # 1) Rastreamento de atividades dentro do sistema
@@ -126,7 +128,13 @@ def calcular_idade(data_nascimento: str) -> int:
 
 
 # ---------------------------------------------------------
-# 8) LIMPAR VISUALIZADOR DE ACESSOS
+# 8) PAGINACAO
+# ---------------------------------------------------------
+def paginate(select_stmt, page=1, per_page=10, error_out=False):
+    return db.paginate(select_stmt, page=page, per_page=per_page, error_out=error_out)
+
+# ---------------------------------------------------------
+# 9) LIMPAR VISUALIZADOR DE ACESSOS
 # ---------------------------------------------------------
 def parse_browser(user_agent: str) -> str:
     if not user_agent:
