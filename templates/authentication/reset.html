@@ -14,7 +14,7 @@
         {% endif %}
     {% endwith %}
 
-    <form method="POST" action="{{ url_for('auth.reset', token=token) }}">
+    <form method="POST">
         {{ form.hidden_tag() }}
 
         {{ form.password.label }}

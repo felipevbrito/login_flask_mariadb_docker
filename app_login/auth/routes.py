@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, request, session
 from . import auth_bp
 from .forms import LoginForm, RegisterForm, ForgotForm, ResetForm, ChangeUsernameForm, ChangeEmailForm, ChangePasswordForm
-from ..models import User
+from ..models.auth import User
 from ..extensions import db, bcrypt
 from flask_login import login_user, logout_user, login_required, current_user
 from ..extensions import bcrypt
@@ -54,17 +54,18 @@ def logout():
 @auth_bp.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     form = ForgotForm()
-    user = None
+    token = None
 
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
             token = generate_reset_token(user.email)
+            reset_link = url_for('auth.reset', token=token, _external=True)
             flash('Token de recuperação gerado (demo).', 'info')
         else:
             flash('Email não encontrado.', 'warning')
 
-    return render_template('authentication/forgot.html', form=form)
+    return render_template('authentication/forgot.html', form=form, token=token)
 
 @auth_bp.route('/reset/<token>', methods=['GET', 'POST'])
 def reset(token):
@@ -75,7 +76,7 @@ def reset(token):
         flash('Token inválido ou expirado.', 'danger')
         return redirect(url_for('auth.forgot'))
     
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(email=email).first_or_404()
     
     if form.validate_on_submit():
         if user:

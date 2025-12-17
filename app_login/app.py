@@ -4,7 +4,7 @@ from flask_login import current_user, logout_user
 from app_login.config import Config
 from app_login.extensions import db, csrf, login_manager
 from app_login.utils import log_activity
-from app_login.models import User
+from app_login.models.auth import User
 from app_login.auth.routes import auth_bp
 from app_login.home.routes import home_bp
 from app_login.users import users_bp
