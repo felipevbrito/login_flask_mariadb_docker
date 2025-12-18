@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from app_login.models.auth import User, UserActivityLog, db
 from . import users_bp
-from .forms import EditUserForm
+from .forms import EditUserForm, DeleteUserForm
 from functools import wraps
 from flask import redirect, url_for, flash
 from app_login.utils import log_activity, parse_browser, paginate
@@ -30,7 +30,9 @@ def role_required(*roles):
 @role_required("admin")
 def users_list():
     page = request.args.get("page", 1, type=int)
-    pagination = paginate(db.select(User), page=page, per_page=10)
+
+    query_user = ( db.select(User).where(User.status.in_(["active", "inactive"])).order_by(User.id.asc()))
+    pagination = paginate(query_user, page=page, per_page=10)
 
     return render_template("users/users-list.html",users=pagination.items, pagination=pagination)
 
@@ -119,3 +121,17 @@ def users_edit(user_id):
         return redirect(url_for("users.users_list"))
 
     return render_template("users/users-edit.html", user=user, form=form)
+
+#FALSE DELETE DE USER
+@users_bp.route("/delete/<int:user_id>", methods=["POST"])
+@login_required
+@role_required("admin")
+def users_delete(user_id):
+    print(request.form)
+    user = User.query.get_or_404(user_id)
+    user.status = "deleted"
+    db.session.commit()
+
+    flash("Usuário excluído com sucesso.", "success")
+    return redirect(url_for("users.users_list"))
+
