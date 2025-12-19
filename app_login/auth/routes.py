@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request, session
-from . import auth_bp
+from . import auth_bp 
 from .forms import LoginForm, RegisterForm, ForgotForm, ResetForm, ChangeUsernameForm, ChangeEmailForm, ChangePasswordForm
 from ..models.auth import User
 from ..extensions import db, bcrypt
@@ -161,3 +161,4 @@ def profile_password():
         return redirect(url_for("home.index"))
 
     return render_template('pages/profile-password.html', form=form)
+
