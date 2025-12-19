@@ -2,10 +2,12 @@ from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from app_login.models.auth import User, UserActivityLog, db
 from . import users_bp
-from .forms import EditUserForm, DeleteUserForm
+from .forms import EditUserForm
 from functools import wraps
 from flask import redirect, url_for, flash
 from app_login.utils import log_activity, parse_browser, paginate
+from app_login.auth.controllers import generate_reset_token
+
 
 ## Permite acesso somente de usuários especificos##
 def role_required(*roles):
@@ -134,4 +136,22 @@ def users_delete(user_id):
 
     flash("Usuário excluído com sucesso.", "success")
     return redirect(url_for("users.users_list"))
+
+
+#reset de senha pelo admin
+@users_bp.route("/users/reset-password/<int:user_id>", methods=["POST"])
+@login_required
+@role_required("admin")
+def users_reset_password(user_id):
+    user = User.query.get_or_404(user_id)
+    token = generate_reset_token(user.email)
+    reset_link = url_for('auth.reset', token=token, _external=True)
+    
+    # Em ambiente local, apenas mostra o link em flash
+    flash(f"Link de redefinição de senha (demo): <a href='{reset_link}'>{reset_link}</a>", "info")
+    
+    # Em produção, aqui você enviaria o email:
+    # send_email(user.email, "Redefinição de senha", reset_link)
+
+    return redirect(url_for("users.users_view", user_id=user.id))
 
