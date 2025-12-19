@@ -7,9 +7,11 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="text-dark">Administração de Usuários</h2>
 
+    <!-- 
     <a href="#" class="btn btn-primary">
         <i class="bi bi-person-plus me-1"></i> Novo Usuário
-    </a>
+    </a> -->
+
 </div>
 
 <div class="card shadow-sm p-4">
@@ -45,8 +47,6 @@
                         <span title="Ativo" style="color: green; font-size: 20px;">✅</span>
                     {% elif user.status == "inactive" %}
                         <span title="Inativo" style="color: orange; font-size: 20px;">⚠️</span>
-                    {% elif user.status == "deleted" %}
-                        <span title="Excluído" style="color: red; font-size: 20px;">❌</span>
                     {% else %}
                         <span title="Desconhecido">❓</span>
                     {% endif %}
@@ -61,6 +61,16 @@
                 <td class="text-end">
                     <a href="{{ url_for('users.users_view', user_id=user.id) }}" class="btn btn-sm btn-info">Ver</a>
                     <a href="{{ url_for('users.users_edit', user_id=user.id) }}"  class="btn btn-sm btn-warning"> Editar </a>
+                    <form method="POST"
+                          action="{{ url_for('users.users_delete', user_id=user.id) }}"
+                          class="d-inline">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                        <button type="submit"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Deseja realmente excluir este usuário?')">
+                            Excluir
+                        </button>
+                    </form>
                 </td>
             </tr>
             {% else %}

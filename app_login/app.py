@@ -42,16 +42,14 @@ def create_app():
             token_db = current_user.session_token
             token_session = session.get('session_token')
 
-    @app.before_request
-    def check_single_session():
-        if current_user.is_authenticated:
-            token_db = current_user.session_token
-            token_session = session.get('session_token')
-
             if token_db != token_session:
                 logout_user()
-                session.clear()
-                flash("Sessão encerrada: você fez login em outro dispositivo ou navegador.", "warning")
+                session.pop('session_token', None)
+
+                flash(
+                    "Sessão encerrada: você fez login em outro dispositivo.",
+                    "warning"
+                )
                 return redirect(url_for("auth.login"))
 
     # Login Manager
@@ -82,9 +80,17 @@ def create_app():
     def server_error(e):
         return render_template("error/500.html"), 500
 
+    from flask_wtf.csrf import generate_csrf
+
+    @app.context_processor
+    def inject_csrf_token():
+        return dict(csrf_token=generate_csrf())
+
     # Garante criação das tabelas (somente dev)
     with app.app_context():
         db.create_all()
 
     return app
+
+
 

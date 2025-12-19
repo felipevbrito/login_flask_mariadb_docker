@@ -20,10 +20,15 @@
                         </a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
+
                     <li>
-                        <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
-                            <i class="bi bi-box-arrow-right me-2"></i> Sair
-                        </a>
+                        <form method="POST" action="{{ url_for('auth.logout') }}" class="d-inline">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                            <button type="submit" class="dropdown-item text-danger">
+                                <i class="bi bi-box-arrow-right me-2"></i> Sair
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>

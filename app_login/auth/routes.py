@@ -14,23 +14,43 @@ import secrets
 def login():
     form = LoginForm()
     
-    if form.validate_on_submit():
+    if form.validate_on_submit():    
         email = form.email.data
         password = form.password.data
         user = User.query.filter_by(email=email).first()
-        
-        if user and verify_password(user, password):
-            user.last_access = datetime.utcnow()
-            token = secrets.token_hex(32) #gera token session
-            user.session_token = token  
-            db.session.commit()
-            login_user(user)
-            session.permanent = True      #para deslogar depois de um tempo
-            session['session_token'] = user.session_token
-            flash('Bem-vindo ao sistema!', 'success')
-            return redirect(url_for('home.index'))
-        flash('Email ou senha inválidos.', 'danger')
 
+        # Usuário não existe
+        if not user:
+            flash('Email ou senha inválidos.', 'danger')
+            return render_template('authentication/login.html', form=form)
+
+        # Usuário excluído
+        if user.status == "deleted":
+            flash('Conta excluída. Entre em contato com o administrador.', 'danger')
+            return render_template('authentication/login.html', form=form)
+
+        # Usuário inativo
+        if user.status == "inactive":
+            flash('Conta inativa. Aguarde liberação do administrador.', 'warning')
+            return render_template('authentication/login.html', form=form)
+
+        # Senha incorreta
+        if not verify_password(user, password):
+            flash('Email ou senha inválidos.', 'danger')
+            return render_template('authentication/login.html', form=form)
+
+        # Login OK
+        user.last_access = datetime.utcnow()
+        user.session_token = secrets.token_hex(32) #gera token session
+
+        db.session.commit()
+
+        login_user(user)
+        session.permanent = True      #para deslogar depois de um tempo
+        session['session_token'] = user.session_token
+        flash('Bem-vindo ao sistema!', 'success')
+        return redirect(url_for('home.index'))
+        
     return render_template('authentication/login.html', form=form)
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
@@ -42,7 +62,7 @@ def register():
         return redirect(url_for('auth.login'))
     return render_template('authentication/register.html', form=form)
 
-@auth_bp.route('/logout')
+@auth_bp.route('/logout', methods=['POST'])
 @login_required
 def logout():
     current_user.last_access = datetime.utcnow()
