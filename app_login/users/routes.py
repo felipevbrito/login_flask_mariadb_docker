@@ -124,19 +124,7 @@ def users_edit(user_id):
 
     return render_template("users/users-edit.html", user=user, form=form)
 
-#FALSE DELETE DE USER
-#@users_bp.route("/delete/<int:user_id>", methods=["POST"])
-#@login_required
-#@role_required("admin")
-#def users_delete(user_id):
-#    print(request.form)
-#    user = User.query.get_or_404(user_id)
-#    user.status = "deleted"
-#    db.session.commit()
-#    flash("Usuário excluído com sucesso.", "success")
-#   return redirect(url_for("users.users_list"))
-
-# FALSE DELETE DE USER (soft delete)
+# FALSE DELETE DE USER 
 @users_bp.route("/delete/<int:user_id>", methods=["POST"])
 @login_required
 @role_required("admin")
