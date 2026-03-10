@@ -61,9 +61,15 @@
                 <td class="text-end">
                     <a href="{{ url_for('users.users_view', user_id=user.id) }}" class="btn btn-sm btn-info">Ver</a>
                     <a href="{{ url_for('users.users_edit', user_id=user.id) }}"  class="btn btn-sm btn-warning"> Editar </a>
+                    {% if current_user.id == user.id %}
+                    <button class="btn btn-sm btn-secondary" disabled
+                            title="Você não pode excluir sua própria conta">
+                        Excluir
+                    </button>
+                    {% else %}
                     <form method="POST"
-                          action="{{ url_for('users.users_delete', user_id=user.id) }}"
-                          class="d-inline">
+                        action="{{ url_for('users.users_delete', user_id=user.id) }}"
+                        class="d-inline">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                         <button type="submit"
                                 class="btn btn-sm btn-danger"
@@ -71,6 +77,8 @@
                             Excluir
                         </button>
                     </form>
+                    {% endif %}
+
                 </td>
             </tr>
             {% else %}

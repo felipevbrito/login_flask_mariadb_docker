@@ -72,8 +72,10 @@
     │           │
     │           └── users/
     │                   ├── users-edit.html
+    │                   ├── users-gestor.html
     │                   ├── users-list.html
-    │                   └── users-view.html
+    │                   ├── users-view.html
+    │                   └── users.html
     │
     ├── static/
     │   ├── css/
@@ -106,7 +108,10 @@
 - Proteção CSRF em formulários
 - Suporte a HTTPS seguro para cookies (configurável)
 - Limitar tentativas de login
-- Log de atividades (direto no banco)
+- Logs de atividades (direto no banco)
+- Soft delete 
+- Bloqueio de sessão simultânea
+- Validação de status no login
 
 ## ⚡️ Melhorias futuras
 - Suporte a múltiplos perfis de usuário / permissões
@@ -123,5 +128,6 @@ chmod +x start.sh
 ```
 [Acesse a aplicação](http://localhost:8080)
 [Acesse o phpMyAdmin](http://localhost:8081)
+
 
 

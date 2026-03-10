@@ -124,18 +124,24 @@ def users_edit(user_id):
 
     return render_template("users/users-edit.html", user=user, form=form)
 
-#FALSE DELETE DE USER
+# FALSE DELETE DE USER 
 @users_bp.route("/delete/<int:user_id>", methods=["POST"])
 @login_required
 @role_required("admin")
 def users_delete(user_id):
-    print(request.form)
+
     user = User.query.get_or_404(user_id)
+    # Impede autoexclusão
+    if user.id == current_user.id:
+        flash("Você não pode excluir sua própria conta.", "danger")
+        return redirect(url_for("users.users_view", user_id=user.id))
+    
     user.status = "deleted"
     db.session.commit()
 
     flash("Usuário excluído com sucesso.", "success")
     return redirect(url_for("users.users_list"))
+
 
 
 #reset de senha pelo admin
