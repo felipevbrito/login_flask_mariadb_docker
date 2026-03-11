@@ -48,20 +48,31 @@
 
 {% endfor %}
 
+
+{% if ticket.status != "solucionado" %}
+
 <hr>
 
 <h4>Responder</h4>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+            {{ form.mensagem(class="form-control", rows="3", placeholder="Digite sua resposta...") }}
+        </div>
 
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        {{ form.mensagem(class="form-control", rows="3", placeholder="Digite sua resposta...") }}
-    </div>
+        <button class="btn btn-primary">
+            Enviar resposta
+        </button>
 
-    <button class="btn btn-primary">
-        Enviar resposta
-    </button>
+    </form>
 
-</form>
+    {% else %}
+
+        <hr>
+        <div class="alert alert-success">
+            Este chamado foi finalizado.
+        </div>
+
+    {% endif %}
 
 {% endblock %}

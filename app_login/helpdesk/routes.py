@@ -55,10 +55,13 @@ def ticket_view(ticket_id):
     if current_user.role == "admin" and ticket.status == "aberto":
         ticket.status = "em_analise"
         db.session.commit()
-        
+
     form = TicketReplyForm()
 
     if form.validate_on_submit():
+        if ticket.status == "solucionado":
+            flash("Este chamado já foi encerrado.", "warning")
+            return redirect(url_for("helpdesk.ticket_view", ticket_id=ticket.id))
         reply_ticket(ticket_id, form)
 
         db.session.commit()
