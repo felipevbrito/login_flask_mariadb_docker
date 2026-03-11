@@ -1,0 +1,67 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+<h2>Chamado #{{ ticket.id }}</h2>
+
+<p><b>{{ ticket.titulo }}</b></p>
+<p>{{ ticket.descricao }}</p>
+
+{% if current_user.role == "admin" and ticket.status != "solucionado" %}
+
+    <form method="POST" action="{{ url_for('helpdesk.ticket_resolve', ticket_id=ticket.id) }}">
+        {{ form.csrf_token }}
+        <button class="btn btn-success mt-3">
+            Marcar como solucionado
+        </button>
+    </form>
+
+{% endif %}
+
+<hr>
+
+<h4>Chat</h4>
+
+{% for msg in ticket.mensagens %}
+    <div class="card mb-2">
+        <div class="card-body">
+            <b>
+            {% if msg.usuario.role == "admin" %}
+                Admin
+            {% else %}
+                {{ msg.usuario.username }} ({{ msg.usuario.role }})
+            {% endif %}
+            </b>:
+
+            {{ msg.mensagem }}
+            <br>
+
+            <small class="text-muted">
+                {{ msg.criado_em.strftime('%d/%m/%Y %H:%M') }}
+            </small>
+
+        </div>
+    </div>
+
+    {% else %}
+
+    <p class="text-muted">Nenhuma resposta ainda.</p>
+
+{% endfor %}
+
+<hr>
+
+<h4>Responder</h4>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.mensagem(class="form-control", rows="3", placeholder="Digite sua resposta...") }}
+    </div>
+
+    <button class="btn btn-primary">
+        Enviar resposta
+    </button>
+
+</form>
+
+{% endblock %}

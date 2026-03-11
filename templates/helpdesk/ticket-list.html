@@ -1,0 +1,53 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h2>Meus Chamados</h2>
+
+{% if current_user.role in ["user", "gestor"] %}
+    <a href="{{ url_for('helpdesk.ticket_create') }}" class="btn btn-primary">
+        Abrir Chamado
+    </a>
+{% endif %}
+
+<table class="table mt-3">
+
+<tr>
+<th>ID</th>
+<th>Título</th>
+<th>Status</th>
+<th>Data</th>
+<th>Ação</th>
+</tr>
+
+{% for t in tickets %}
+
+<tr>
+<td>{{ t.id }}</td>
+<td>{{ t.titulo }}</td>
+<td>
+    {% if t.status == "aberto" %}
+    <span class="badge bg-secondary">Aberto</span>
+
+    {% elif t.status == "em_analise" %}
+    <span class="badge bg-warning text-dark">Em análise</span>
+
+    {% elif t.status == "solucionado" %}
+    <span class="badge bg-success">Solucionado</span>
+
+    {% endif %}
+</td>
+<td>{{ t.criado_em.strftime('%d/%m/%Y') }}</td>
+<td>
+<a href="{{ url_for('helpdesk.ticket_view', ticket_id=t.id) }}" class="btn btn-sm btn-info">
+    Ver
+</a>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

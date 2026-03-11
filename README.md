@@ -32,6 +32,13 @@
     │   │     ├── forms.py
     │   │     └── routes.py 
     │   │
+    │   ├── helpdesk/
+    │   │     ├── __init__.py
+    │   │     ├── controllers.py
+    │   │     ├── forms.py
+    │   │     ├── routes.py
+    │   │     └── models.py
+    │   │
     │   └── module/
     │         └── teste.py
     │   

@@ -1,24 +1,33 @@
 <nav class="navbar custom-navbar shadow-sm">
     <div class="container-fluid">
-
         <!-- Título -->
         <a href="{{ url_for('home.index') }}" class="navbar-brand mb-0 h1 fw-semibold text-dark text-decoration-none">
             Meu sistema de login
         </a>
 
-        <div class="ms-auto"> 
+        <div class="ms-auto d-flex align-items-center gap-3">
+
+            <!-- Suporte -->
+            <a href="{{ url_for('helpdesk.tickets') }}" class="btn btn-light border">
+                <i class="bi bi-headset me-1"></i> Suporte
+            </a>
+
+            <!-- Perfil -->
             <div class="dropdown">
-                Olá,
+
                 <button class="btn btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-1"></i>  {{ current_user.username }}
+                    <i class="bi bi-person-circle me-1"></i>
+                    Olá, {{ current_user.username }}
                 </button>
 
                 <ul class="dropdown-menu dropdown-menu-end">
+
                     <li>
                         <a class="dropdown-item" href="{{ url_for('auth.profile') }}">
                             <i class="bi bi-gear me-2"></i> Alterar dados
                         </a>
                     </li>
+
                     <li><hr class="dropdown-divider"></li>
 
                     <li>
@@ -30,9 +39,11 @@
                             </button>
                         </form>
                     </li>
-                </ul>
-            </div>
-        </div>
 
+                </ul>
+
+            </div>
+
+        </div>
     </div>
 </nav>

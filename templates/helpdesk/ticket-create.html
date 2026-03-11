@@ -1,0 +1,25 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<h2>Abrir Chamado</h2>
+
+<form method="POST">
+
+{{ form.hidden_tag() }}
+
+<div class="mb-3">
+{{ form.titulo.label }}
+{{ form.titulo(class="form-control") }}
+</div>
+
+<div class="mb-3">
+{{ form.descricao.label }}
+{{ form.descricao(class="form-control") }}
+</div>
+
+{{ form.submit(class="btn btn-success") }}
+
+</form>
+
+{% endblock %}
