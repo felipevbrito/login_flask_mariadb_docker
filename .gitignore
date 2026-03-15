@@ -22,3 +22,5 @@ temp/
 # Docker
 *.pid
 
+#Arquivos de imagem helpdesk
+app_login/uploads/
