@@ -26,6 +26,10 @@
     │   ├── models/
     │   │     └── auth.py
     │   │
+    │   ├── uploads/
+    │   │     └── tickets/
+    │   │             └── teste.jpeg
+    │   │
     │   ├── users/
     │   │     ├── __init__.py
     │   │     ├── controllers.py
@@ -54,6 +58,12 @@
     │           │       ├── 403.html
     │           │       ├── 404.html
     │           │       └── 500.html
+    │           │
+    │           ├── helpdesk/
+    │           │       ├── ticket-create.html
+    │           │       ├── ticket-list.html
+    │           │       ├── ticket-response.html
+    │           │       └── ticket-view.html
     │           │
     │           ├── includes/
     │           │       ├── footer.html
@@ -119,9 +129,10 @@
 - Soft delete 
 - Bloqueio de sessão simultânea
 - Validação de status no login
+- Suporte a múltiplos perfis de usuário / permissões
 
 ## ⚡️ Melhorias futuras
-- Suporte a múltiplos perfis de usuário / permissões
+- helpdesk completo (com uso de print de imagens e chat)
 
 ## 🏃 Como rodar
 1. Certifique-se de ter o Docker e Docker Compose instalados.

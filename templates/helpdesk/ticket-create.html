@@ -4,21 +4,39 @@
 
 <h2>Abrir Chamado</h2>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
-{{ form.hidden_tag() }}
+    {{ form.hidden_tag() }}
 
-<div class="mb-3">
-{{ form.titulo.label }}
-{{ form.titulo(class="form-control") }}
-</div>
+    <div class="mb-3">
+        {{ form.titulo.label }}
+        {{ form.titulo(class="form-control") }}
+    </div>
 
-<div class="mb-3">
-{{ form.descricao.label }}
-{{ form.descricao(class="form-control") }}
-</div>
+    <div class="mb-3">
+        {{ form.descricao.label }}
+        {{ form.descricao(class="form-control") }}
+    </div>
 
-{{ form.submit(class="btn btn-success") }}
+    <div class="mb-3">
+        <label class="form-label">Anexar imagens (máx. 3)</label>
+
+        <input
+            type="file"
+            class="form-control"
+            name="imagens"
+            id="imagens"
+            multiple
+            accept="image/png, image/jpeg, image/webp"
+        >
+
+        <div class="form-text">
+            Envie prints ou imagens que ajudem a identificar o problema.
+        </div>
+    </div>
+
+    <div id="preview-imagens" class="d-flex gap-2 flex-wrap mt-2"></div>
+    {{ form.submit(class="btn btn-success") }}
 
 </form>
 

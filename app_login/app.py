@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, render_template, session, redirect, url_for, flash
+from flask import Flask, request, render_template, session, redirect, url_for, flash, send_from_directory
 from flask_login import current_user, logout_user
 from app_login.config import Config
 from app_login.extensions import db, csrf, login_manager
@@ -88,6 +88,11 @@ def create_app():
     @app.context_processor
     def inject_csrf_token():
         return dict(csrf_token=generate_csrf())
+
+    @app.route("/uploads/<path:filename>")
+    def uploaded_file(filename):
+        pasta = os.path.join(app.root_path, "uploads")
+        return send_from_directory(pasta, filename)
 
     # Garante criação das tabelas (somente dev)
     with app.app_context():
