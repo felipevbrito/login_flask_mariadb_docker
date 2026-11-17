@@ -17,7 +17,6 @@ def create_ticket(form):
     db.session.commit()
 
     # UPLOAD DE IMAGENS
-    #upload_path = os.path.join(current_app.root_path, "uploads", "tickets")
     base_upload = os.path.join(current_app.root_path, "uploads", "tickets")
     ticket_folder = os.path.join(base_upload, str(ticket.id))
     os.makedirs(ticket_folder, exist_ok=True)
@@ -44,17 +43,4 @@ def reply_ticket(ticket_id, form):
     db.session.add(msg)
     db.session.commit()
 
-    # UPLOAD DE IMAGENS
-    upload_path = os.path.join(current_app.root_path, "uploads", "tickets")
-    files = request.files.getlist("imagens")
-
-    for file in files:
-        if file.filename == "":
-            continue
-        filename = salvar_imagem_ticket(file, upload_path)
-        img = TicketImage(
-            ticket_id=ticket_id,
-            filename=filename
-        )
-        db.session.add(img)
-    db.session.commit()
+    return msg

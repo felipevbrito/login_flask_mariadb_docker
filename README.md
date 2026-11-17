@@ -144,7 +144,7 @@ chmod +x start.sh
 ```bash
 ./start.sh
 ```
-[Acesse a aplicação](http://localhost:8080)
+[Acesse a aplicação](http://localhost:8090)
 [Acesse o phpMyAdmin](http://localhost:8081)
 
 
