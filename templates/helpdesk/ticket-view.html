@@ -1,0 +1,190 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Chamado #{{ ticket.id }}</h2>
+
+    {% if current_user.role == "admin" and ticket.status != "solucionado" %}
+    <form method="POST" action="{{ url_for('helpdesk.ticket_resolve', ticket_id=ticket.id) }}">
+        {{ form.csrf_token }}
+        <button class="btn btn-success">
+            Marcar como solucionado
+        </button>
+    </form>
+    {% endif %}
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>{{ ticket.titulo }}</h5>
+        <p>{{ ticket.descricao }}</p>
+    </div>
+</div>
+
+<hr>
+
+<h4>Chat</h4>
+
+{% for msg in ticket.mensagens %}
+    <div class="card mb-2">
+        <div class="card-body">
+
+            <b>
+            {% if msg.usuario.role == "admin" %}
+                Admin
+            {% else %}
+                {{ msg.usuario.username }} ({{ msg.usuario.role }})
+            {% endif %}
+            </b>:
+
+            <p class="mb-1">{{ msg.mensagem }}</p>
+
+            <small class="text-muted">
+                {{ msg.criado_em.strftime('%d/%m/%Y %H:%M') }}
+            </small>
+
+        </div>
+    </div>
+{% else %}
+    <p class="text-muted">Nenhuma resposta ainda.</p>
+{% endfor %}
+
+{% if ticket.images %}
+<hr>
+<h5>Anexos</h5>
+
+<div class="row">
+    {% for img in ticket.images %}
+    <div class="col-md-3 mb-3">
+
+        <img
+            src="{{ url_for('uploaded_file', filename='tickets/' ~ ticket.id ~ '/' ~ img.filename) }}"
+            class="img-thumbnail imagem-ticket"
+            style="cursor:pointer"
+            onclick="abrirImagem({{ loop.index0 }})"
+        >
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endif %}
+
+{% if ticket.status != "solucionado" %}
+
+<hr>
+<h4>Responder</h4>
+
+<form method="POST">
+    {{ form.hidden_tag() }}
+
+    <div class="mb-3">
+        {{ form.mensagem(class="form-control", rows="3", placeholder="Digite sua resposta...") }}
+    </div>
+
+    <button class="btn btn-primary">
+        Enviar resposta
+    </button>
+</form>
+
+{% else %}
+
+<hr>
+<div class="alert alert-success">
+    Este chamado foi finalizado.
+</div>
+
+{% endif %}
+
+</div>
+
+
+<!-- modal -->
+<div class="modal fade" id="modalImagem" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center position-relative">
+        <!-- Botão esquerda -->
+        <button onclick="imagemAnterior()" class="btn btn-dark position-absolute top-50 start-0 translate-middle-y">
+            ←
+        </button>
+
+        <!-- IMAGEM PRINCIPAL -->
+        <img id="imagemGrande" class="img-fluid rounded">
+
+        <!-- Botão direita -->
+        <button onclick="proximaImagem()" class="btn btn-dark position-absolute top-50 end-0 translate-middle-y">
+            →
+        </button>
+
+        <!-- Indicador -->
+        <div class="mt-2 text-muted">
+            <span id="contadorImagem"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+let imagens = []
+let imagemAtual = 0
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const imgs = document.querySelectorAll(".imagem-ticket")
+        imgs.forEach(img => {
+            imagens.push(img.src)
+        })
+
+    })
+
+    function abrirImagem(index){
+        imagemAtual = index
+        atualizarImagem()
+        let modal = new bootstrap.Modal(document.getElementById("modalImagem"))
+        modal.show()
+    }
+
+    function atualizarImagem(){
+        document.getElementById("imagemGrande").src = imagens[imagemAtual]
+        document.getElementById("contadorImagem").innerText =
+            (imagemAtual + 1) + " / " + imagens.length
+    }
+
+    // teclado
+    document.addEventListener("keydown", function(e){
+        const modal = document.getElementById("modalImagem")
+        if(!modal.classList.contains("show")) return
+        if(e.key === "ArrowRight"){
+            proximaImagem()
+        }
+        if(e.key === "ArrowLeft"){
+            imagemAnterior()
+        }
+    })
+
+
+    function proximaImagem(){
+        imagemAtual++
+        if(imagemAtual >= imagens.length){
+            imagemAtual = 0
+        }
+        atualizarImagem()
+    }
+
+    function imagemAnterior(){
+        imagemAtual--
+        if(imagemAtual < 0){
+            imagemAtual = imagens.length - 1
+        }
+        atualizarImagem()
+    }
+
+</script>
+
+{% endblock %}

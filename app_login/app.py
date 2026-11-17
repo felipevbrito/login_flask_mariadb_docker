@@ -1,13 +1,15 @@
 import os
-from flask import Flask, request, render_template, session, redirect, url_for, flash
+from flask import Flask, request, render_template, session, redirect, url_for, flash, send_from_directory
 from flask_login import current_user, logout_user
 from app_login.config import Config
 from app_login.extensions import db, csrf, login_manager
 from app_login.utils import log_activity
 from app_login.models.auth import User
+from app_login.helpdesk.models import Ticket, TicketMessage
 from app_login.auth.routes import auth_bp
 from app_login.home.routes import home_bp
 from app_login.users import users_bp
+from app_login.helpdesk import helpdesk_bp
 from datetime import timedelta
 
 def create_app():
@@ -66,6 +68,7 @@ def create_app():
     app.register_blueprint(auth_bp, url_prefix="/auth")
     app.register_blueprint(home_bp)
     app.register_blueprint(users_bp)
+    app.register_blueprint(helpdesk_bp)
 
     # Error Handlers
     @app.errorhandler(404)
@@ -85,6 +88,11 @@ def create_app():
     @app.context_processor
     def inject_csrf_token():
         return dict(csrf_token=generate_csrf())
+
+    @app.route("/uploads/<path:filename>")
+    def uploaded_file(filename):
+        pasta = os.path.join(app.root_path, "uploads")
+        return send_from_directory(pasta, filename)
 
     # Garante criação das tabelas (somente dev)
     with app.app_context():

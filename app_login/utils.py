@@ -1,10 +1,12 @@
-from flask import request
+from flask import request, current_app
 from app_login.extensions import db
 from app_login.models.auth import UserActivityLog
 import re
 from datetime import datetime, date
 from flask_sqlalchemy import Pagination
-
+import os
+import uuid 
+from PIL import Image
 
 # ---------------------------------------------------------
 # 1) Rastreamento de atividades dentro do sistema
@@ -156,3 +158,20 @@ def parse_browser(user_agent: str) -> str:
         return "Internet Explorer"
 
     return "Desconhecido"
+
+# ---------------------------------------------------------
+# 10) TRATAR IMAGENS DO SISTEMA (HELPDESK)
+# ---------------------------------------------------------
+
+def salvar_imagem_ticket(file, upload_path):
+    if not file:
+        return None
+
+    os.makedirs(upload_path, exist_ok=True)
+    filename = f"{uuid.uuid4()}.jpg"
+    caminho = os.path.join(upload_path, filename)
+    img = Image.open(file)
+    img.thumbnail((1000, 1000))
+    img = img.convert("RGB")
+    img.save(caminho, "JPEG", quality=70, optimize=True)
+    return filename
